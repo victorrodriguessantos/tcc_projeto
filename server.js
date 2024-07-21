@@ -5,8 +5,11 @@ import mysql from 'mysql2';
 const app = express();
 const port = 1500;
 
+
 // Middleware para analisar o corpo das requisições JSON
 app.use(express.json());
+
+app.use(express.static('public'));
 
 // Configuração da conexão com o MySQL
 const connection = mysql.createConnection({
