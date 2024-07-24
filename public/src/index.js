@@ -1,65 +1,182 @@
-async function listarProdutos() {
-    try {
-        const response = await fetch('/listarProduto');
-        const produtos = await response.json();
-        
-        const conteudoDiv = document.getElementById('conteudo');
-        conteudoDiv.innerHTML = ''; // Limpar conteúdo anterior
-        document.getElementById('titulo').textContent = 'Lista de Produtos';
+function abrirFormularioCliente() {
+    document.getElementById('formularioClienteModal').style.display = 'block';
+}
 
-        produtos.forEach(produto => {
-            const produtoDiv = document.createElement('div');
-            produtoDiv.textContent = `ID: ${produto.id_produto}, Nome: ${produto.name_produto}, Descrição: ${produto.descricao}`;
-            conteudoDiv.appendChild(produtoDiv);
+function fecharFormularioCliente() {
+    document.getElementById('formularioClienteModal').style.display = 'none';
+}
+
+function abrirEditarCliente(cliente) {
+    const form = document.getElementById('editarClienteForm');
+    form.editar_id_cliente.value = cliente.id_cliente;
+    form.editar_name_empresa.value = cliente.name_empresa;
+    form.editar_name_cliente.value = cliente.name_cliente;
+    form.editar_cpf_cnpj.value = cliente.cpf_cnpj;
+    form.editar_email.value = cliente.email;
+    form.editar_phone.value = cliente.phone;
+    form.editar_endereco.value = cliente.endereco;
+    form.editar_status_user.value = cliente.status_user;
+
+    document.getElementById('editarClienteModal').style.display = 'block';
+}
+
+function fecharEditarCliente() {
+    document.getElementById('editarClienteModal').style.display = 'none';
+}
+
+async function criarCliente() {
+    const clienteForm = document.getElementById('clienteForm');
+    const formData = new FormData(clienteForm);
+    const clienteData = {
+        name_empresa: formData.get('name_empresa'),
+        name_cliente: formData.get('name_cliente'),
+        cpf_cnpj: formData.get('cpf_cnpj'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        endereco: formData.get('endereco'),
+        status_user: formData.get('status_user')
+    };
+
+    try {
+        const response = await fetch('/criarCliente', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(clienteData)
         });
+
+        if (response.ok) {
+            alert('Cliente criado com sucesso!');
+            listarClientes(); // Atualizar a lista de clientes
+            fecharFormularioCliente(); // Esconder o formulário modal
+        } else {
+            const errorData = await response.json();
+            alert('Erro ao criar cliente: ' + errorData.error);
+        }
     } catch (error) {
-        console.error('Erro ao listar produtos:', error);
+        console.error('Erro ao criar cliente:', error);
+    }
+}
+
+async function atualizarCliente() {
+    const form = document.getElementById('editarClienteForm');
+    const clienteData = {
+        id_cliente: form.editar_id_cliente.value,
+        name_empresa: form.editar_name_empresa.value,
+        name_cliente: form.editar_name_cliente.value,
+        cpf_cnpj: form.editar_cpf_cnpj.value,
+        email: form.editar_email.value,
+        phone: form.editar_phone.value,
+        endereco: form.editar_endereco.value,
+        status_user: form.editar_status_user.value
+    };
+
+    try {
+        const response = await fetch('/atualizarCliente', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(clienteData)
+        });
+
+        if (response.ok) {
+            alert('Cliente atualizado com sucesso!');
+            listarClientes(); // Atualizar a lista de clientes
+            fecharEditarCliente(); // Esconder o formulário modal
+        } else {
+            const errorData = await response.json();
+            alert('Erro ao atualizar cliente: ' + errorData.error);
+        }
+    } catch (error) {
+        console.error('Erro ao atualizar cliente:', error);
+    }
+}
+
+async function excluirCliente(id_cliente) {
+    const confirmation = confirm('Tem certeza que deseja excluir este cliente?');
+
+    if (confirmation) {
+        try {
+            const response = await fetch(`/excluirCliente/${id_cliente}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                alert('Cliente excluído com sucesso!');
+                listarClientes(); // Atualizar a lista de clientes
+            } else {
+                const errorData = await response.json();
+                alert('Erro ao excluir cliente: ' + errorData.error);
+            }
+        } catch (error) {
+            console.error('Erro ao excluir cliente:', error);
+        }
     }
 }
 
 async function listarClientes() {
+    const conteudoDiv = document.getElementById('conteudo');
+    conteudoDiv.innerHTML = `
+        <h1>Lista de Clientes</h1>
+        <button onclick="abrirFormularioCliente()">Novo Cliente</button>
+        <div id="clientesList"></div>
+    `;
+
     try {
         const response = await fetch('/listarClientes');
         const clientes = await response.json();
-        
-        const conteudoDiv = document.getElementById('conteudo');
-        conteudoDiv.innerHTML = ''; // Limpar conteúdo anterior
-        document.getElementById('titulo').textContent = 'Lista de Clientes';
+
+        const clientesListDiv = document.getElementById('clientesList');
+        clientesListDiv.innerHTML = ''; // Limpar conteúdo anterior
 
         clientes.forEach(cliente => {
             const clienteDiv = document.createElement('div');
-            clienteDiv.textContent = `ID: ${cliente.id_cliente}, Nome: ${cliente.name_cliente}, Empresa: ${cliente.name_empresa}`;
-            conteudoDiv.appendChild(clienteDiv);
+            clienteDiv.className = 'client-item';
+            clienteDiv.innerHTML = `
+                <div class="client-info">
+                    <span><strong>Nome:</strong> ${cliente.name_cliente}</span>
+                    <span><strong>Empresa:</strong> ${cliente.name_empresa}</span>
+                    <span><strong>CPF/CNPJ:</strong> ${cliente.cpf_cnpj}</span>
+                </div>
+                <div class="client-actions">
+                    <button onclick='visualizarCliente(${JSON.stringify(cliente)})'>Visualizar</button>
+                    <button onclick='abrirEditarCliente(${JSON.stringify(cliente)})'>Editar</button>
+                    <button onclick='excluirCliente(${cliente.id_cliente})'>Excluir</button>
+                </div>
+            `;
+            clientesListDiv.appendChild(clienteDiv);
         });
     } catch (error) {
         console.error('Erro ao listar clientes:', error);
     }
 }
 
-async function listarUsuarios() {
-    try {
-        const response = await fetch('/listarUsuarios');
-        const usuarios = await response.json();
-        
-        const conteudoDiv = document.getElementById('conteudo');
-        conteudoDiv.innerHTML = ''; // Limpar conteúdo anterior
-        document.getElementById('titulo').textContent = 'Lista de Usuários';
 
-        usuarios.forEach(usuario => {
-            const usuarioDiv = document.createElement('div');
-            usuarioDiv.textContent = `ID: ${usuario.id_usuario}, Nome: ${usuario.name_usuario}, User: ${usuario.user_db}`;
-            conteudoDiv.appendChild(usuarioDiv);
-        });
-    } catch (error) {
-        console.error('Erro ao listar usuários:', error);
-    }
+function visualizarCliente(cliente) {
+    alert(`
+        Nome: ${cliente.name_cliente}
+        Empresa: ${cliente.name_empresa}
+        CPF/CNPJ: ${cliente.cpf_cnpj}
+        Email: ${cliente.email}
+        Telefone: ${cliente.phone}
+        Endereço: ${cliente.endereco}
+        Status: ${cliente.status_user ? 'Ativo' : 'Inativo'}
+    `);
 }
 
 function carregarDashboard() {
     const conteudoDiv = document.getElementById('conteudo');
-    conteudoDiv.innerHTML = ''; // Limpar conteúdo anterior
-    document.getElementById('titulo').textContent = 'Dashboard';
-    const dashboardDiv = document.createElement('div');
-    dashboardDiv.textContent = 'Bem-vindo ao Dashboard!';
-    conteudoDiv.appendChild(dashboardDiv);
+    conteudoDiv.innerHTML = '<h1>Bem-vindo ao Dashboard!</h1>';
+}
+
+function listarProdutos() {
+    const conteudoDiv = document.getElementById('conteudo');
+    conteudoDiv.innerHTML = '<h1>Lista de Produtos</h1>';
+}
+
+function listarUsuarios() {
+    const conteudoDiv = document.getElementById('conteudo');
+    conteudoDiv.innerHTML = '<h1>Lista de Usuários</h1>';
 }
