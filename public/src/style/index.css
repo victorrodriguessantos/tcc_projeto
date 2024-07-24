@@ -127,12 +127,13 @@ h1 {
 }
 .client-item {
     background-color: #f4f4f4;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .client-info {
@@ -153,6 +154,7 @@ h1 {
     padding: 5px 10px;
     cursor: pointer;
     border-radius: 3px;
+    transition: background-color 0.3s;
 }
 
 .client-actions button:hover {

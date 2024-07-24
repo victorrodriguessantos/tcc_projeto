@@ -73,7 +73,7 @@ async function atualizarCliente() {
     };
 
     try {
-        const response = await fetch('/atualizarCliente', {
+        const response = await fetch('/editarCliente', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -152,6 +152,7 @@ async function listarClientes() {
         console.error('Erro ao listar clientes:', error);
     }
 }
+
 
 
 function visualizarCliente(cliente) {
