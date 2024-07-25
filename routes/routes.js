@@ -93,6 +93,42 @@ router.post('/criarCliente', (req, res) => {
     });
 });
 
+// Rota para atualizar o cliente
+router.put('/editarCliente/:id', (req, res) => {
+    const id_cliente = req.params.id;
+    const { name_empresa, name_cliente, cpf_cnpj, email, phone, endereco, status_user } = req.body;
+
+    if (!name_cliente || !cpf_cnpj || !status_user) {
+        return res.status(400).json({ error: 'Todos os campos são obrigatórios: name_cliente, cpf_cnpj, status_user' });
+    }
+
+    db.query('UPDATE Clientes SET name_empresa = ?, name_cliente = ?, cpf_cnpj = ?, email = ?, phone = ?, endereco = ?, status_user = ? WHERE id_cliente = ?', 
+        [name_empresa, name_cliente, cpf_cnpj, email, phone, endereco, status_user, id_cliente], (err, result) => {
+
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.status(200).json({ message: 'Cliente atualizado com sucesso!', id_cliente, name_empresa, name_cliente, cpf_cnpj, email, phone, endereco, status_user });
+    });
+});
+
+// Rota para excluir um cliente
+router.delete('/excluirCliente/:id', (req, res) => {
+    const id_cliente = req.params.id;
+
+    db.query('DELETE FROM Clientes WHERE id_cliente = ?', [id_cliente], (err, result) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        if (result.affectedRows === 0) {
+            res.status(404).json({ error: 'Cliente não encontrado' });
+            return;
+        }
+        res.status(200).json({ message: 'Cliente excluído com sucesso!' });
+    });
+});
 
 
 // =============================== FINAL CLIENTES =============================== //

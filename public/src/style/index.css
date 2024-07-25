@@ -4,35 +4,49 @@ body {
     padding: 0;
 }
 
+/* INICIO MENU */
 .container {
     display: flex;
     height: 100vh;
 }
 
+.novoCliente{
+    padding: 10px;
+    background-color: #007bff;
+}
+
 .sidebar {
-    width: 200px;
-    background-color: #333;
+    width: 100px;
+    background-color: #0b6477;
     color: white;
     padding: 15px;
+    justify-content: center;
+    align-items: center;
 }
 
 .sidebar button {
-    width: 100%;
+    width: 100px;
+    height: 100px;
     padding: 10px;
     margin: 5px 0;
     border: none;
-    background-color: #444;
+    background-color: #14919b;
     color: white;
     cursor: pointer;
+    border-radius: 25%;
+    box-shadow: 2px 0 5px black;
 }
 
 .sidebar button:hover {
-    background-color: #555;
+    background-color: #395886;
 }
+
+/* FINAL MENU */
 
 .content {
     flex-grow: 1;
     padding: 15px;
+    background-color: #0b6477;
 }
 
 h1 {

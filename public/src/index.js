@@ -60,39 +60,66 @@ async function criarCliente() {
 }
 
 async function atualizarCliente() {
-    const form = document.getElementById('editarClienteForm');
-    const clienteData = {
-        id_cliente: form.editar_id_cliente.value,
-        name_empresa: form.editar_name_empresa.value,
-        name_cliente: form.editar_name_cliente.value,
-        cpf_cnpj: form.editar_cpf_cnpj.value,
-        email: form.editar_email.value,
-        phone: form.editar_phone.value,
-        endereco: form.editar_endereco.value,
-        status_user: form.editar_status_user.value
+    const id_cliente = document.getElementById('editar_id_cliente').value;
+    const name_empresa = document.getElementById('editar_name_empresa').value;
+    const name_cliente = document.getElementById('editar_name_cliente').value;
+    const cpf_cnpj = document.getElementById('editar_cpf_cnpj').value;
+    const email = document.getElementById('editar_email').value;
+    const phone = document.getElementById('editar_phone').value;
+    const endereco = document.getElementById('editar_endereco').value;
+    const status_user = document.getElementById('editar_status_user').value;
+
+    const cliente = {
+        name_empresa,
+        name_cliente,
+        cpf_cnpj,
+        email,
+        phone,
+        endereco,
+        status_user
     };
 
     try {
-        const response = await fetch('/editarCliente', {
+        const response = await fetch(`/editarCliente/${id_cliente}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(clienteData)
+            body: JSON.stringify(cliente)
         });
 
-        if (response.ok) {
-            alert('Cliente atualizado com sucesso!');
-            listarClientes(); // Atualizar a lista de clientes
-            fecharEditarCliente(); // Esconder o formulário modal
-        } else {
+        if (!response.ok) {
             const errorData = await response.json();
-            alert('Erro ao atualizar cliente: ' + errorData.error);
+            throw new Error(errorData.error);
         }
+
+        const data = await response.json();
+        alert(data.message);
+        fecharEditarCliente();
+        listarClientes();
     } catch (error) {
         console.error('Erro ao atualizar cliente:', error);
+        alert('Erro ao atualizar cliente: ' + error.message);
     }
 }
+
+function abrirEditarCliente(cliente) {
+    document.getElementById('editar_id_cliente').value = cliente.id_cliente;
+    document.getElementById('editar_name_empresa').value = cliente.name_empresa;
+    document.getElementById('editar_name_cliente').value = cliente.name_cliente;
+    document.getElementById('editar_cpf_cnpj').value = cliente.cpf_cnpj;
+    document.getElementById('editar_email').value = cliente.email;
+    document.getElementById('editar_phone').value = cliente.phone;
+    document.getElementById('editar_endereco').value = cliente.endereco;
+    document.getElementById('editar_status_user').value = cliente.status_user;
+    document.getElementById('editarClienteModal').style.display = 'block';
+}
+
+function fecharEditarCliente() {
+    document.getElementById('editarClienteForm').reset();
+    document.getElementById('editarClienteModal').style.display = 'none';
+}
+
 
 async function excluirCliente(id_cliente) {
     const confirmation = confirm('Tem certeza que deseja excluir este cliente?');
@@ -181,3 +208,6 @@ function listarUsuarios() {
     const conteudoDiv = document.getElementById('conteudo');
     conteudoDiv.innerHTML = '<h1>Lista de Usuários</h1>';
 }
+
+// teste
+
