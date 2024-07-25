@@ -1,7 +1,26 @@
+@import url('https://cdn-uicons.flaticon.com/2.4.2/uicons-solid-straight/css/uicons-solid-straight.css');
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+}
+
+.createUser {
+    width: 150px;
+    background-color: #2563eb;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+}
+
+.createUser i {
+    margin: 5px;
+}
+
+.createUser:hover {
+    background-color: #1d4ed8;
 }
 
 /* INICIO MENU */
@@ -22,6 +41,13 @@ body {
     padding: 15px;
     justify-content: center;
     align-items: center;
+}
+
+.sidebar i {
+    flex-direction: column;
+    display: flex;
+    font-size: 30px;
+    margin-bottom: 10px;
 }
 
 .sidebar button {
@@ -144,16 +170,17 @@ h1 {
     padding: 15px;
     margin: 15px 0;
     border-radius: 8px;
+    border: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
 }
 
 .client-info {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
+    flex-direction:column;
+    gap: 10px;
 }
 
 .client-actions {

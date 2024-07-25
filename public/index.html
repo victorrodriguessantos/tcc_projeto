@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Clientes</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <head>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-solid-straight/css/uicons-solid-straight.css'>
     <link rel="stylesheet" href="src/style/index.css">
 </head>
 <body>
     <div class="container">
         <div class="sidebar">
-            <button onclick="carregarDashboard()">Dashboard</button>
-            <button onclick="listarClientes()">Clientes</button>
-            <button onclick="listarProdutos()">Produtos</button>
-            <button onclick="listarUsuarios()">Usuários</button>
+            <button onclick="carregarDashboard()"><i class="fi fi-ss-dashboard-monitor"></i>Dashboard</button>
+            <button onclick="listarClientes()"><i class="fi fi-ss-users"></i>Clientes</button>
+            <button onclick="listarProdutos()"><i class="fi fi-ss-box-open"></i>Produtos</button>
+            <button onclick="listarUsuarios()"><i class="fi fi-ss-circle-user"></i>Usuários</button>
         </div>
         <div class="content">
             <div id="conteudo"></div>

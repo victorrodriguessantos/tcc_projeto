@@ -147,7 +147,7 @@ async function listarClientes() {
     const conteudoDiv = document.getElementById('conteudo');
     conteudoDiv.innerHTML = `
         <h1>Lista de Clientes</h1>
-        <button onclick="abrirFormularioCliente()">Novo Cliente</button>
+        <button class="createUser" onclick="abrirFormularioCliente()"><i class="fi fi-ss-user-add"></i>Novo Cliente</button>
         <div id="clientesList"></div>
     `;
 
@@ -168,7 +168,7 @@ async function listarClientes() {
                     <span><strong>CPF/CNPJ:</strong> ${cliente.cpf_cnpj}</span>
                 </div>
                 <div class="client-actions">
-                    <button onclick='visualizarCliente(${JSON.stringify(cliente)})'>Visualizar</button>
+                    <button onclick='visualizarCliente(${JSON.stringify(cliente)})'><i class=""></i>Visualizar</button>
                     <button onclick='abrirEditarCliente(${JSON.stringify(cliente)})'>Editar</button>
                     <button onclick='excluirCliente(${cliente.id_cliente})'>Excluir</button>
                 </div>
