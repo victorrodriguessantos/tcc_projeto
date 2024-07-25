@@ -169,7 +169,7 @@ async function listarClientes() {
                 </div>
                 <div class="client-actions">
                     <button onclick='visualizarCliente(${JSON.stringify(cliente)})'><i class=""></i>Visualizar</button>
-                    <button onclick='abrirEditarCliente(${JSON.stringify(cliente)})'>Editar</button>
+                    <button onclick='abrirEditarCliente(${JSON.stringify(cliente)})'><i class="fi fi-ss-file-edit"></i></button>
                     <button onclick='excluirCliente(${cliente.id_cliente})'>Excluir</button>
                 </div>
             `;
