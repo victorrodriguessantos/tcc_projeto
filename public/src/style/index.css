@@ -6,6 +6,7 @@ body {
     padding: 0;
 }
 
+/* Lista de Clientes */
 .createUser {
     width: 150px;
     background-color: #2563eb;
@@ -21,6 +22,28 @@ body {
 
 .createUser:hover {
     background-color: #1d4ed8;
+}
+
+.client-actions .excluir {
+    background: transparent;
+    color: red;
+    border: 1px solid red;
+}
+
+.client-actions .excluir:hover {
+    background: red;
+    color: white;
+}
+
+.client-actions .editar {
+    background: transparent;
+    color: #1d4ed8;
+    border: 1px solid #1d4ed8;
+}
+
+.client-actions .editar:hover {
+    background: #1d4ed8;
+    color: white;
 }
 
 /* INICIO MENU */
