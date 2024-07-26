@@ -46,6 +46,17 @@ body {
     color: white;
 }
 
+.client-actions .visualizar {
+    background: transparent;
+    color: #26c32b;
+    border: 1px solid #26c32b;
+}
+
+.client-actions .visualizar:hover {
+    background: #26c32b;
+    color: white;
+}
+
 /* INICIO MENU */
 .container {
     display: flex;

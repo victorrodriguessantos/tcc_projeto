@@ -168,7 +168,7 @@ async function listarClientes() {
                     <span><strong>CPF/CNPJ:</strong> ${cliente.cpf_cnpj}</span>
                 </div>
                 <div class="client-actions">
-                    <button onclick='visualizarCliente(${JSON.stringify(cliente)})'><i class=""></i>Visualizar</button>
+                    <button class="visualizar" onclick='visualizarCliente(${JSON.stringify(cliente)})'><i class=""><i class="fi-ss-overview"></i></button>
                     <button class="editar" onclick='abrirEditarCliente(${JSON.stringify(cliente)})'><i class="fi fi-ss-file-edit"></i></button>
                     <button class="excluir" onclick='excluirCliente(${cliente.id_cliente})'><i class="fi-ss-trash"></i></button>
                 </div>
